@@ -1,0 +1,23 @@
+{
+    "name": "gstvac/storage-server",
+    "description": "Storage server",
+    "type": "project",
+    "license": "AGPL-3.0",
+    "authors": [
+        {
+            "name": "Gus Costa",
+            "email": "gustavo@gustavoalves.com.br"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.12",
+        "vlucas/phpdotenv": "^3.3"
+    },
+    "config": {
+        "process-timeout": 0,
+        "sort-packages": true
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t src src/index.php"
+    }
+}

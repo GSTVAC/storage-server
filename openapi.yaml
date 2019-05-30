@@ -1,0 +1,76 @@
+openapi: 3.0.0
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/gus-costa/storage-server/1.0.0
+info:
+  description: Storage server
+  version: "1.0.0"
+  title: Storage server
+  contact:
+    name: Gus Costa
+    email: gustavo@gustavoalves.com.br
+  license:
+    name: AGPL 3.0
+    url: 'https://www.gnu.org/licenses/agpl-3.0.html'
+paths:
+  /f:
+    post:
+      summary: Uploads a file
+      operationId: uploadFile
+      description: Uploads a file, returning its id
+      responses:
+        '201':
+          description: File uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+        description: File to upload
+  /f/{uuid}:
+    get:
+      parameters:
+        - name: uuid
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      summary: gets a file
+      operationId: getFile
+      description: Gets a file by its id
+      responses:
+        '200':
+          description: The file
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: File not found
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+components:
+  schemas:
+    UploadResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+  responses:
+    BadRequest:
+      description: Invalid parameters
+    UnexpectedError:
+      description: Unexpected Error
